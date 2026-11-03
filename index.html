@@ -775,7 +775,7 @@ html.no-scroll{overflow:hidden}
           <svg aria-hidden="true"><use href="#i-wa"/></svg>
           <span class="t-d" data-label="Enviar e falar no WhatsApp">Enviar e falar no WhatsApp</span><span class="t-m" data-label="Falar no WhatsApp">Falar no WhatsApp</span>
         </button>
-        <p class="fnote"><svg aria-hidden="true"><use href="#i-lock"/></svg>Seus dados ficam só com a Conquer Sudoeste. Ao enviar, você concorda em receber nosso contato pelo WhatsApp.</p>
+        <p class="fnote"><svg aria-hidden="true"><use href="#i-lock"/></svg>Usamos seus dados só para falar com você e medir o resultado dos nossos anúncios. Ao enviar, você concorda em receber nosso contato pelo WhatsApp.</p>
       </form>
     </div>
   </div>
@@ -1346,6 +1346,9 @@ html.no-scroll{overflow:hidden}
   /* ---------- Disparo de eventos ---------- */
   function track(lead) {
     var data = { cargo: lead.cargo_valor, desafio: lead.desafio_valor };
+    /* Conversões otimizadas do Google Ads: telefone do lead no formato internacional (+55...).
+       Precisa vir antes do evento. Vai em texto puro; a tag do Google aplica o hash SHA-256 antes de enviar. */
+    gtag('set', 'user_data', { phone_number: '+' + lead.whatsapp });
     dataLayer.push({ event: lead.qualificado ? 'lead_qualificado' : 'lead_nao_qualificado', lead_cargo: lead.cargo_valor, lead_desafio: lead.desafio_valor });
     if (TEST) return;
     if (typeof window.fbq === 'function') {
